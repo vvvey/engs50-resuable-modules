@@ -5,7 +5,7 @@
  * Created: 10-05-2024
  * Version: 1.0
  * 
- * Description: 
+ * Description: linked-list implementation in C
  * 
  */
 
