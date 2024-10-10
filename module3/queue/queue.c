@@ -13,10 +13,22 @@
 #include <stdbool.h>
 #include "queue.h"
 
+typedef struct queue {
+	node_t *front = NULL;
+	node_t *back = NULL;
+} pq_t;
+
+typedef struct node {
+	struct node *next;
+	void *data;
+} node_t;
+
+static queue_t *qp = NULL;
 
 /* create an empty queue */
 queue_t* qopen(void) {
-	return NULL;
+	qp = (pq_t*)malloc(sizeof(pq_t));
+	return (queue_t)qp;
 }
 
 /* deallocate a queue, frees everything in it */
