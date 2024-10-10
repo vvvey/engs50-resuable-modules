@@ -1,0 +1,112 @@
+CFLAGS=-Wall -pedantic -std=c11 -g
+
+all:	lput_tests lget_tests lapply_tests lremove_tests 
+
+list.o:	list.c list.h
+		gcc $(CFLAGS) -c list.c
+
+# lput tests
+
+lput_tests: lput_test1 lput_test2 lput_test3
+
+lput_test1.o: lput_test1.c list.h
+		gcc $(CFLAGS) -c lput_test1.c
+
+lput_test1: lput_test1.o list.o
+		gcc $(CFLAGS) lput_test1.o list.o -o lput_test1
+
+lput_test2.o: lput_test2.c list.h
+		gcc $(CFLAGS) -c lput_test2.c
+
+lput_test2: lput_test2.o list.o
+		gcc $(CFLAGS) lput_test2.o list.o -o lput_test2
+
+lput_test3.o: lput_test3.c list.h
+		gcc $(CFLAGS) -c lput_test3.c
+
+lput_test3: lput_test3.o list.o
+		gcc $(CFLAGS) lput_test3.o list.o -o lput_test3
+
+# lget tests
+lget_tests: lget_test1 lget_test2 lget_test3
+
+lget_test1.o: lget_test1.c list.h
+		gcc $(CFLAGS) -c lget_test1.c
+
+lget_test1: lget_test1.o list.o
+		gcc $(CFLAGS) lget_test1.o list.o -o lget_test1
+
+lget_test2.o: lget_test2.c list.h
+		gcc $(CFLAGS) -c lget_test2.c
+
+lget_test2: lget_test2.o list.o
+		gcc $(CFLAGS) lget_test2.o list.o -o lget_test2
+
+lget_test3.o: lget_test3.c list.h
+		gcc $(CFLAGS) -c lget_test3.c
+
+lget_test3: lget_test3.o list.o
+		gcc $(CFLAGS) lget_test3.o list.o -o lget_test3
+
+
+# lapply tests
+
+lapply_tests: lapply_test1 lapply_test2 lapply_test3
+
+lapply_test1.o: lapply_test1.c list.h
+		gcc $(CFLAGS) -c lapply_test1.c
+
+lapply_test1: lapply_test1.o list.o
+		gcc $(CFLAGS) lapply_test1.o list.o -o lapply_test1
+
+lapply_test2.o: lapply_test2.c list.h
+		gcc $(CFLAGS) -c lapply_test2.c
+
+lapply_test2: lapply_test2.o list.o
+		gcc $(CFLAGS) lapply_test2.o list.o -o lapply_test2
+
+lapply_test3.o: lapply_test3.c list.h
+		gcc $(CFLAGS) -c lapply_test3.c
+
+lapply_test3: lapply_test3.o list.o
+		gcc $(CFLAGS) lapply_test3.o list.o -o lapply_test3
+
+
+# lremove tests
+
+lremove_tests: lremove_test1 lremove_test2 lremove_test3 lremove_test4 lremove_test5
+
+lremove_test1.o:	lremove_test1.c list.h
+		gcc $(CFLAGS) -c lremove_test1.c
+
+lremove_test1:		lremove_test1.o list.o
+		gcc $(CFLAGS) lremove_test1.o list.o -o lremove_test1
+
+lremove_test2.o:	lremove_test2.c list.h
+		gcc $(CFLAGS) -c lremove_test2.c
+
+lremove_test2:		lremove_test2.o list.o
+		gcc $(CFLAGS) lremove_test2.o list.o -o lremove_test2	
+
+lremove_test3.o:	lremove_test3.c list.h
+		gcc $(CFLAGS) -c lremove_test3.c
+
+lremove_test3:		lremove_test3.o list.o
+		gcc $(CFLAGS) lremove_test3.o list.o -o lremove_test3
+
+lremove_test4.o:	lremove_test4.c list.h
+		gcc $(CFLAGS) -c lremove_test4.c
+
+lremove_test4:		lremove_test4.o list.o
+		gcc $(CFLAGS) lremove_test4.o list.o -o lremove_test4
+
+lremove_test5.o:	lremove_test5.c list.h
+		gcc $(CFLAGS) -c lremove_test5.c
+
+lremove_test5:		lremove_test5.o list.o
+		gcc $(CFLAGS) lremove_test5.o list.o -o lremove_test5		
+
+
+# cleaning
+clean:
+		rm -f *.o lput_test1 lput_test2 lput_test3 lremove_test1 lremove_test2 lremove_test3 lremove_test4 lremove_test5 lapply_test1 lget_test1 lget_test2 lget_test3
