@@ -1,7 +1,7 @@
 /* 
  * queue.c --- 
  * 
- * Author: Vuthy Vey
+ * Author: Samuel R. Hirsh and Vuthy Vey
  * Created: 10-10-2024
  * Version: 1.0
  * 
@@ -10,30 +10,37 @@
  */
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "queue.h"
 
-typedef struct queue {
-	node_t *front = NULL;
-	node_t *back = NULL;
-} pq_t;
-
+/* queue node data type */
 typedef struct node {
 	struct node *next;
 	void *data;
 } node_t;
 
-static queue_t *qp = NULL;
+/* queue holding two pointers */
+typedef struct queue {
+	node_t *front;
+	node_t *back;
+} pq_t;
 
 /* create an empty queue */
 queue_t* qopen(void) {
-	qp = (pq_t*)malloc(sizeof(pq_t));
-	return (queue_t)qp;
+	pq_t *qp = (pq_t*)malloc(sizeof(pq_t));
+	if (qp == NULL) {
+		return NULL;
+	}
+
+	qp->front = NULL;
+	qp->back = NULL;
+	return (queue_t*)qp;
 }
 
 /* deallocate a queue, frees everything in it */
 void qclose(queue_t *qp) {
-	return NULL;
+
 }
 
 /* put element at the end of the queue
@@ -45,12 +52,12 @@ int32_t qput(queue_t *qp, void *elementp) {
 
 /* get the first first element from queue, removing it from the queue */
 void* qget(queue_t *qp) {
-	return NULL;
+	
 }
 
 /* apply a function to every element of the queue */
 void qapply(queue_t *qp, void (*fn)(void* elementp)) {
-	return NULL;
+	
 }
 
 /* search a queue using a supplied boolean function
@@ -65,7 +72,7 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)) {
 void* qsearch(queue_t *qp, 
 							bool (*searchfn)(void* elementp,const void* keyp),
 							const void* skeyp) {
-	return NULL;
+	
 }
 
 /* search a queue using a supplied boolean function (as in qsearch),
@@ -75,13 +82,13 @@ void* qsearch(queue_t *qp,
 void* qremove(queue_t *qp,
 							bool (*searchfn)(void* elementp,const void* keyp),
 							const void* skeyp) {
-	return NULL;
+	
 }
 
 /* concatenatenates elements of q2 into q1
  * q2 is dealocated, closed, and unusable upon completion 
  */
 void qconcat(queue_t *q1p, queue_t *q2p) {
-	return NULL;
+	
 }
 
