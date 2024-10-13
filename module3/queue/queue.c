@@ -130,10 +130,28 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)) {
  *          -- returns TRUE or FALSE as defined in bool.h
  * returns a pointer to an element, or NULL if not found
  */
-void* qsearch(queue_t *qp, 
-							bool (*searchfn)(void* elementp,const void* keyp),
-							const void* skeyp) {
-	
+void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp) {
+	if (qp == NULL) { return NULL;}
+
+	// Cast to queue data type
+	pq_t *queue_p = (pq_t*)qp;
+
+	if (queue_p->front == NULL) {return NULL;} 
+
+	// Search for element
+	node_t *curr_p = queue_p->front;
+	while (curr_p != NULL) {
+		void* elem_p = curr_p->data;
+
+		if (searchfn(elem_p, skeyp)) { // return a bool
+			return elem_p; // Found
+		}
+
+		curr_p = curr_p->next;
+	}
+
+	// Not found
+	return NULL;
 }
 
 /* search a queue using a supplied boolean function (as in qsearch),
