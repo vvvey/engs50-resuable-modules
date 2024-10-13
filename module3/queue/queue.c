@@ -92,8 +92,17 @@ int32_t qput(queue_t *qp, void *elementp) {
 
 /* get the first first element from queue, removing it from the queue */
 void* qget(queue_t *qp) {
+	if (qp == NULL) {
+		return NULL;
+	}
+	
 	pq_t *q = (pq_t*)qp;
 
+	if (q->front == NULL) {
+		return NULL;
+	}
+
+	
 	node_t *first = q->front;
 	void* data = first->data;
 	
