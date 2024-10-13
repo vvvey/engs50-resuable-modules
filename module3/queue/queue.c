@@ -29,6 +29,7 @@ typedef struct queue {
 /* create an empty queue */
 queue_t* qopen(void) {
 	pq_t *qp = (pq_t*)malloc(sizeof(pq_t));
+
 	if (qp == NULL) {
 		return NULL;
 	}
@@ -38,9 +39,22 @@ queue_t* qopen(void) {
 	return (queue_t*)qp;
 }
 
+
 /* deallocate a queue, frees everything in it */
 void qclose(queue_t *qp) {
+	pq_t *q = (pq_t*)qp;
 
+	node_t *current = q->front;
+	node_t *next;
+
+	while (current != NULL) {
+		next = current->next;
+		free(current->data);
+		free(current);
+		current = next;
+	}
+
+	free(qp);
 }
 
 /* put element at the end of the queue
@@ -78,7 +92,7 @@ int32_t qput(queue_t *qp, void *elementp) {
 
 /* get the first first element from queue, removing it from the queue */
 void* qget(queue_t *qp) {
-	
+
 }
 
 /* apply a function to every element of the queue */
