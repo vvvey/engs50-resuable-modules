@@ -101,7 +101,6 @@ void* qget(queue_t *qp) {
 	if (q->front == NULL) {
 		return NULL;
 	}
-
 	
 	node_t *first = q->front;
 	void* data = first->data;
@@ -109,7 +108,7 @@ void* qget(queue_t *qp) {
 	q->front = first->next;
 
 	if (q->front == NULL) {
-		q->back == NULL;
+		q->back = NULL;
 	}
 	
 	free(first);
