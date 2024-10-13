@@ -47,7 +47,33 @@ void qclose(queue_t *qp) {
  * returns 0 is successful; nonzero otherwise 
  */
 int32_t qput(queue_t *qp, void *elementp) {
-	return NULL;
+	
+	if (qp == NULL || elementp == NULL) {
+		return -1;
+	}
+	//  Cast queue type
+	pq_t *the_q = (pq_t *)qp;
+	
+	// Create new node
+	node_t *nodep = (node_t *)malloc(sizeof(node_t));
+	if (nodep == NULL) {
+		return -1; // Failed to allocate memory
+	}
+
+	nodep->data = elementp; // Assign the data to the new node
+	nodep->next = NULL; 
+
+	if (the_q->front == NULL && the_q->back == NULL) {
+		// Queue is empty
+		the_q->front = nodep; 
+		the_q->back = nodep;
+	} else {
+		// Queue not empty
+		the_q->back->next = nodep;
+		the_q->back = nodep;
+	}
+
+	return 0; // Success
 }
 
 /* get the first first element from queue, removing it from the queue */
