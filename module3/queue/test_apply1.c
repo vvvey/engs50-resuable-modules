@@ -52,7 +52,7 @@ int main() {
     qput(qp, person2);
     qput(qp, person3);
 
-    qapply(qp, increaseAge);
+    qapply(qp, (void (*)(void* ))increaseAge);
 
     if (person1->age == 22 && person2->age == 20 && person3->age == 24) {
         exit(EXIT_SUCCESS);
