@@ -118,7 +118,18 @@ void* qget(queue_t *qp) {
 
 /* apply a function to every element of the queue */
 void qapply(queue_t *qp, void (*fn)(void* elementp)) {
-	
+	if (qp == NULL || fn == NULL) {
+		return NULL;
+  }
+  
+  pq_t *q = (pq_t*)qp;
+
+	node_t *curr_p = q->front;
+
+  while (curr_p != NULL) {
+		fn(curr_p->data);
+    curr_p = curr_p->next;
+  }
 }
 
 /* search a queue using a supplied boolean function
@@ -158,11 +169,50 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
  * removes the element from the queue and returns a pointer to it or
  * NULL if not found
  */
-void* qremove(queue_t *qp,
-							bool (*searchfn)(void* elementp,const void* keyp),
-							const void* skeyp) {
-	
+void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp) {
+    if (qp == NULL || searchfn == NULL || skeyp == NULL) {
+        return NULL;
+    }
+
+    pq_t *q = (pq_t*)qp;
+
+    if (q->front == NULL) {
+        return NULL;
+    }
+
+    node_t *curr_p = q->front;
+    node_t *prev_p = NULL;
+
+    while (curr_p != NULL) {
+        void* elem_p = curr_p->data;
+
+        if (searchfn(elem_p, skeyp)) {
+            if (prev_p == NULL) {
+                q->front = curr_p->next;
+
+                if (q->front == NULL) {
+                    q->back = NULL;
+                }
+            } else {
+                prev_p->next = curr_p->next;
+
+                if (curr_p->next == NULL) {
+                    q->back = prev_p;
+                }
+            }
+
+            void* data = curr_p->data;
+            free(curr_p);
+            return data;
+        }
+
+        prev_p = curr_p;
+        curr_p = curr_p->next;
+    }
+
+    return NULL;
 }
+
 
 /* concatenatenates elements of q2 into q1
  * q2 is dealocated, closed, and unusable upon completion 
