@@ -168,6 +168,8 @@ void* qremove(queue_t *qp,
  * q2 is dealocated, closed, and unusable upon completion 
  */
 void qconcat(queue_t *q1p, queue_t *q2p) {
+
+
 	// Check if q1p and q2p are NULL
     if (q1p == NULL) {
         return; // There's nothing to concatenate to
@@ -177,14 +179,16 @@ void qconcat(queue_t *q1p, queue_t *q2p) {
         return; // Nothing to concatenate from q2
     }
 
+	pq_t *q1_p = (pq_t*)q1p;
+	pq_t *q2_p = (pq_t*)q2p;  
     
-    if (q1p->front == NULL) {
-        q1p->front = q2p->front;  // set q1's front and back to q2's front and back
-        q1p->back = q2p->back;
-    } else if (q2p->front != NULL) {
+    if (q1_p->front == NULL) {
+        q1_p->front = q2_p->front;  // set q1's front and back to q2's front and back
+        q1_p->back = q2_p->back;
+    } else if (q2_p->front != NULL) {
         // Link the end of q1 to the beginning of q2
-        q1p->back->next = q2p->front; // Connect q1's back to q2's front
-        q1p->back = q2p->back;        // Update q1's back to q2's back
+        q1_p->back->next = q2_p->front; // Connect q1's back to q2's front
+        q1_p->back = q2_p->back;        // Update q1's back to q2's back
     }
 
     // Deallocate q2
