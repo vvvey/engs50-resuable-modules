@@ -3,7 +3,10 @@
  *
  */
 #include <stdint.h>
-
+#include <stdlib.h>
+#include <stdbool.h>
+#include "hash.h"
+#include "../queue/queue.h"
 /* 
  * SuperFastHash() -- produces a number between 0 and the tablesize-1.
  * 
@@ -54,3 +57,60 @@ static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
   hash += hash >> 6;
   return hash % tablesize;
 }
+
+typedef struct {
+    uint32_t size;
+    queue_t **table; // array of queue
+} hasht_t;
+
+/* hopen -- opens a hash table with initial size hsize */
+hashtable_t *hopen(uint32_t hsize) {
+  hasht_t *htp = (hasht_t*)malloc(sizeof(hasht_t));
+
+  htp->table = (queue_t**)malloc(hsize * sizeof(queue_t*));
+
+  for (uint32_t i = 0; i < hsize; i++) {
+    htp->table[i] = qopen(); // initiate queue
+  }
+
+  return (hashtable_t*)htp;
+}
+
+/* hclose -- closes a hash table */
+void hclose(hashtable_t *htp);
+
+/* hput -- puts an entry into a hash table under designated key 
+ * returns 0 for success; non-zero otherwise
+ */
+int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen) {
+  if (htp == NULL || ep == NULL || key == NULL) { return -1;} // Error
+  
+  hasht_t *hashtablep = (hasht_t*)htp;
+
+  int loc = (int)SuperFastHash(key, keylen, hashtablep->size);
+  queue_t *qp = hashtablep->table[loc]; 
+
+  return qput(qp, ep); // return 0 if qput success
+}
+
+/* happly -- applies a function to every entry in hash table */
+void happly(hashtable_t *htp, void (*fn)(void* ep));
+
+/* hsearch -- searchs for an entry under a designated key using a
+ * designated search fn -- returns a pointer to the entry or NULL if
+ * not found
+ */
+void *hsearch(hashtable_t *htp, 
+	      bool (*searchfn)(void* elementp, const void* searchkeyp), 
+	      const char *key, 
+	      int32_t keylen);
+
+/* hremove -- removes and returns an entry under a designated key
+ * using a designated search fn -- returns a pointer to the entry or
+ * NULL if not found
+ */
+void *hremove(hashtable_t *htp, 
+	      bool (*searchfn)(void* elementp, const void* searchkeyp), 
+	      const char *key, 
+	      int32_t keylen);
+
