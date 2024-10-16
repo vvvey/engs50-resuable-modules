@@ -86,8 +86,8 @@ void hclose(hashtable_t *htp) {
 
 	hasht_t *hashtablep = (hasht_t*)htp;
 	
-	for (uint32_t i = 0; i < hsize; i++) {
-		qclose(hashtabelp->table[i])
+	for (uint32_t i = 0; i < hashtablep->size; i++) {
+		qclose(hashtablep->table[i]);
 	}
 
 	free(htp);
@@ -115,8 +115,8 @@ void happly(hashtable_t *htp, void (*fn)(void* ep)) {
 
 	hasht_t *hashtablep = (hasht_t*)htp;
 
-	for (uint32_t i = 0; i < hsize; i++) {
-		qapply(hashtabelp->table[i], fn);
+	for (uint32_t i = 0; i < hashtablep->size; i++) {
+		qapply(hashtablep->table[i], fn);
 	}
 }
 
@@ -125,19 +125,19 @@ void happly(hashtable_t *htp, void (*fn)(void* ep)) {
  * not found
  */
 void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen) {
-	if (htp == NULL) {
-		return NULL;
-	}
+	//	if (htp == NULL) {
+	//		return NULL;
+	//	}
 
-	hasht_t *hashtablep = (hasht_t*)htp;
+	//	hasht_t *hashtablep = (hasht_t*)htp;
 
-	for (uint32_t i = 0; i < hsize; i++) {
-		if (searchfn(elem_p, skeyp)) {
-			qsearch(hashtablep->table[i], searchkeyp);
-		}
-	}
+	//	for (uint32_t i = 0; i < hsize; i++) {
+	//		if (searchfn(elem_p, skeyp)) {
+	//			qsearch(hashtablep->table[i], searchkeyp);
+	//		}
+	//	}
 
-	return NULL;
+	// 	return NULL;
 }
 
 /* hremove -- removes and returns an entry under a designated key
