@@ -3,6 +3,9 @@
 !*.*
 !*/
 
+# Allow Makefile
+!Makefile
+
 # Not ignore: .c, .h, Makefile
 # Object files and libraries
 *.a
@@ -15,3 +18,4 @@
 
 # Debugging Symbols
 *.dSYM
+
