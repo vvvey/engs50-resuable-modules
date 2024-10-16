@@ -70,6 +70,7 @@ hashtable_t *hopen(uint32_t hsize) {
   hasht_t *htp = (hasht_t*)malloc(sizeof(hasht_t));
 
   htp->table = (queue_t**)malloc(hsize * sizeof(queue_t*));
+  htp->size = (uint32_t)hsize;
 
   for (uint32_t i = 0; i < hsize; i++) {
     htp->table[i] = (queue_t*)qopen(); // initiate queue
@@ -97,11 +98,12 @@ void hclose(hashtable_t *htp) {
  * returns 0 for success; non-zero otherwise
  */
 int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen) {
-  if (htp == NULL || ep == NULL || key == NULL) { return -1;} // Error
+  if (htp == NULL || ep == NULL || key == NULL || keylen < 1) { return -1;} // Error
   
   hasht_t *hashtablep = (hasht_t*)htp;
 
   int loc = (int)SuperFastHash(key, keylen, hashtablep->size);
+
   queue_t *qp = hashtablep->table[loc]; 
 
   return qput(qp, ep); // return 0 if qput success
@@ -144,8 +146,7 @@ void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* sea
  * using a designated search fn -- returns a pointer to the entry or
  * NULL if not found
  */
-void *hremove(hashtable_t *htp, 
-	      bool (*searchfn)(void* elementp, const void* searchkeyp), 
-	      const char *key, 
-	      int32_t keylen);
+void *hremove(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen) {
+  
+}
 
