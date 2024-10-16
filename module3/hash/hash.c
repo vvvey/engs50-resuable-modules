@@ -65,12 +65,14 @@ typedef struct {
 
 /* hopen -- opens a hash table with initial size hsize */
 hashtable_t *hopen(uint32_t hsize) {
+  if (hsize >= 2147483648) {return NULL;} // if it is negative
+  
   hasht_t *htp = (hasht_t*)malloc(sizeof(hasht_t));
 
   htp->table = (queue_t**)malloc(hsize * sizeof(queue_t*));
 
   for (uint32_t i = 0; i < hsize; i++) {
-    htp->table[i] = qopen(); // initiate queue
+    htp->table[i] = (queue_t*)qopen(); // initiate queue
   }
 
   return (hashtable_t*)htp;
