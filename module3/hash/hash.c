@@ -77,7 +77,19 @@ hashtable_t *hopen(uint32_t hsize) {
 }
 
 /* hclose -- closes a hash table */
-void hclose(hashtable_t *htp);
+void hclose(hashtable_t *htp) {
+	if (htp == NULL) {
+		return NULL;
+	}
+
+	hasht_t *hashtablep = (hasht_t*)htp;
+	
+	for (uint32_t i = 0; i < hsize; i++) {
+		qclose(hashtabelp->table[i])
+	}
+
+	free(htp);
+}
 
 /* hput -- puts an entry into a hash table under designated key 
  * returns 0 for success; non-zero otherwise
@@ -94,16 +106,37 @@ int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen) {
 }
 
 /* happly -- applies a function to every entry in hash table */
-void happly(hashtable_t *htp, void (*fn)(void* ep));
+void happly(hashtable_t *htp, void (*fn)(void* ep)) {
+	if (htp == NULL || fn == NULL) {
+		return NULL;
+	}
+
+	hasht_t *hashtablep = (hasht_t*)htp;
+
+	for (uint32_t i = 0; i < hsize; i++) {
+		qapply(hashtabelp->table[i], fn);
+	}
+}
 
 /* hsearch -- searchs for an entry under a designated key using a
  * designated search fn -- returns a pointer to the entry or NULL if
  * not found
  */
-void *hsearch(hashtable_t *htp, 
-	      bool (*searchfn)(void* elementp, const void* searchkeyp), 
-	      const char *key, 
-	      int32_t keylen);
+void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen) {
+	if (htp == NULL) {
+		return NULL;
+	}
+
+	hasht_t *hashtablep = (hasht_t*)htp;
+
+	for (uint32_t i = 0; i < hsize; i++) {
+		if (searchfn(elem_p, skeyp)) {
+			qsearch(hashtablep->table[i], searchkeyp);
+		}
+	}
+
+	return NULL;
+}
 
 /* hremove -- removes and returns an entry under a designated key
  * using a designated search fn -- returns a pointer to the entry or
