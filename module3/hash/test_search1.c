@@ -40,9 +40,9 @@ student_t *make_student(char* namep, int age, char* studentIDp ){
     return sp;
 }
 
-bool compareStudent(student_t *sp, const char* namep) {
+bool compareStudent(student_t *sp, const char* studentIDp) {
     if (sp == NULL) {return false;}
-    return strcmp(sp->name, namep) == 0;
+    return strcmp(sp->studentID, studentIDp) == 0;
 }
 
 int main() {
@@ -57,7 +57,7 @@ int main() {
     hput(htp, person2, person2->studentID, keylen);
     hput(htp, person3, person3->studentID, keylen);
 
-    student_t *resultp = (student_t*)hsearch(htp, (bool (*)(void *, const void *))compareStudent, "Emily Davis", 6);
+    student_t *resultp = (student_t*)hsearch(htp, (bool (*)(void *, const void *))compareStudent, "f012jg", 6);
     
     if (resultp == person3) { // Found the right student
         exit(EXIT_SUCCESS);

@@ -40,9 +40,9 @@ student_t *make_student(char* namep, int age, char* studentIDp ){
     return sp;
 }
 
-bool compareStudent(student_t *sp, const char* namep) {
+bool compareStudent(student_t *sp, const char* studentIDp) {
     if (sp == NULL) {return false;}
-    return strcmp(sp->name, namep) == 0;
+    return strcmp(sp->studentID, studentIDp) == 0;
 }
 
 int main() {
@@ -59,7 +59,7 @@ int main() {
     hput(htp, person3, person3->studentID, keylen);
     hput(htp, person4, person3->studentID, keylen);
 
-    student_t *resultp = (student_t*)hremove(htp, (bool (*)(void *, const void *))compareStudent, "elon", 6);
+    student_t *resultp = (student_t*)hremove(htp, (bool (*)(void *, const void *))compareStudent, "elondd", 6);
     
     if (resultp == NULL) { 
         exit(EXIT_SUCCESS);
