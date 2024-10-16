@@ -64,6 +64,7 @@ int main() {
     // Remove
     car_t *result = (car_t*)qremove(qp_1, (bool (*)(void*, const void*))compareCar, "Honda Civic");
 
+		
     if (result == car_p && qget(qp_1) == car2_p && qget(qp_1) == car3_p && qget(qp_1) == car4_p && qget(qp_1) == car5_p && qget(qp_1) == NULL ) {
         exit(EXIT_SUCCESS);
     } else {

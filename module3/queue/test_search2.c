@@ -61,10 +61,10 @@ int main() {
     qput(qp_1, car4_p);
     qput(qp_1, car5_p);
 
-    // Remove
-    car_t *result = (car_t*)qremove(qp_1, (bool (*)(void*, const void*))compareCar, "Jeep Wrangler Sahara");
+    // Search
+    car_t *result = (car_t*)qsearch(qp_1, (bool (*)(void*, const void*))compareCar, "Honda Civic");
 
-		if (result == car3_p && qget(qp_1) == car_p && qget(qp_1) == car2_p && qget(qp_1) == car4_p && qget(qp_1) == car5_p && qget(qp_1) == NULL) {
+		if (result == car_p) {
         exit(EXIT_SUCCESS);
     } else {
         exit(EXIT_FAILURE);

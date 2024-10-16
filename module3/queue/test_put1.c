@@ -54,17 +54,9 @@ int main() {
 
     queue_t *qp_1 = qopen();
 
-    // Assume qput is valid
     qput(qp_1, car_p);
-    qput(qp_1, car2_p);
-    qput(qp_1, car3_p);
-    qput(qp_1, car4_p);
-    qput(qp_1, car5_p);
 
-    // Remove
-    car_t *result = (car_t*)qremove(qp_1, (bool (*)(void*, const void*))compareCar, "Jeep Wrangler Sahara");
-
-		if (result == car3_p && qget(qp_1) == car_p && qget(qp_1) == car2_p && qget(qp_1) == car4_p && qget(qp_1) == car5_p && qget(qp_1) == NULL) {
+		if (qget(qp_1) == car_p) {
         exit(EXIT_SUCCESS);
     } else {
         exit(EXIT_FAILURE);

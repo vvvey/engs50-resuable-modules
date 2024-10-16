@@ -15,7 +15,7 @@
 #include <string.h>
 #include "queue.h"
 
-#define MAXREG 10
+#define MAXREG 100
 
 /* the representation of a car */
 typedef struct car {
@@ -64,7 +64,7 @@ int main() {
     // Remove
     car_t *result = (car_t*)qremove(qp_1, (bool (*)(void*, const void*))compareCar, "Toyota Prius");
 
-    if (result == car5_p && qget(qp_1) == car_p && qget(qp_1) == car2_p && qget(qp_1) == car4_p && qget(qp_1) == car4_p && qget(qp_1) == NULL ) {
+    if (result == car5_p && qget(qp_1) == car_p && qget(qp_1) == car2_p && qget(qp_1) == car3_p && qget(qp_1) == car4_p && qget(qp_1) == NULL ) {
         exit(EXIT_SUCCESS);
     } else {
         exit(EXIT_FAILURE);

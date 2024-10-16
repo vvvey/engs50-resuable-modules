@@ -170,47 +170,46 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
  * NULL if not found
  */
 void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp) {
-    if (qp == NULL || searchfn == NULL || skeyp == NULL) {
-        return NULL;
-    }
+	if (qp == NULL || searchfn == NULL || skeyp == NULL) {
+      return NULL;
+  }
 
-    pq_t *q = (pq_t*)qp;
+  pq_t *q = (pq_t*)qp;
 
-    if (q->front == NULL) {
-        return NULL;
-    }
+  if (q->front == NULL) {
+      return NULL;
+  }
 
-    node_t *curr_p = q->front;
-    node_t *prev_p = NULL;
+	node_t *curr_p = q->front;
+  node_t *prev_p = NULL;
 
-    while (curr_p != NULL) {
-        void* elem_p = curr_p->data;
+  while (curr_p != NULL) {
+      void* elem_p = curr_p->data;
 
-        if (searchfn(elem_p, skeyp)) {
-            if (prev_p == NULL) {
-                q->front = curr_p->next;
+      if (searchfn(elem_p, skeyp)) {
+          if (prev_p == NULL) {
+              q->front = curr_p->next;
 
-                if (q->front == NULL) {
-                    q->back = NULL;
-                }
-            } else {
-                prev_p->next = curr_p->next;
+							if (q->front == NULL) {
+                  q->back = NULL;
+              }
+          } else {
+              prev_p->next = curr_p->next;
 
-                if (curr_p->next == NULL) {
-                    q->back = prev_p;
-                }
-            }
+              if (curr_p->next == NULL) {
+                  q->back = prev_p;
+              }
+          }
 
-            void* data = curr_p->data;
-            free(curr_p);
-            return data;
-        }
+					free(curr_p);
+          return elem_p;
+      }
 
-        prev_p = curr_p;
-        curr_p = curr_p->next;
-    }
+      prev_p = curr_p;
+      curr_p = curr_p->next;
+  }
 
-    return NULL;
+  return NULL;
 }
 
 
