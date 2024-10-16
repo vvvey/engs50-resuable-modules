@@ -127,26 +127,41 @@ void happly(hashtable_t *htp, void (*fn)(void* ep)) {
  * not found
  */
 void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen) {
-	//	if (htp == NULL) {
-	//		return NULL;
-	//	}
+    if (htp == NULL || searchfn == NULL || key == NULL || keylen < 1) {
+        return NULL;
+    }
 
-	//	hasht_t *hashtablep = (hasht_t*)htp;
+    hasht_t *hashtablep = (hasht_t*)htp;
+    int hashloc = (int)SuperFastHash(key, keylen, hashtablep->size);
 
-	//	for (uint32_t i = 0; i < hsize; i++) {
-	//		if (searchfn(elem_p, skeyp)) {
-	//			qsearch(hashtablep->table[i], searchkeyp);
-	//		}
-	//	}
+    queue_t *qp = hashtablep->table[hashloc];
 
-	// 	return NULL;
+		if (qp == NULL) {
+			return NULL;
+		}
+
+    return qsearch(qp, searchfn, key);
 }
+
 
 /* hremove -- removes and returns an entry under a designated key
  * using a designated search fn -- returns a pointer to the entry or
  * NULL if not found
  */
 void *hremove(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen) {
-  
+    if (htp == NULL || searchfn == NULL || key == NULL || keylen < 1) {
+        return NULL;
+    }
+
+    hasht_t *hashtablep = (hasht_t*)htp;
+    int hashloc = (int)SuperFastHash(key, keylen, hashtablep->size);
+
+    queue_t *qp = hashtablep->table[hashloc];
+
+		if (qp == NULL) {
+			return NULL;
+		}
+
+    return qremove(qp, searchfn, key);
 }
 
