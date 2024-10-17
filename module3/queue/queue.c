@@ -49,7 +49,6 @@ void qclose(queue_t *qp) {
 
 	while (current != NULL) {
 		next = current->next;
-		free(current->data);
 		free(current);
 		current = next;
 	}
@@ -119,7 +118,7 @@ void* qget(queue_t *qp) {
 /* apply a function to every element of the queue */
 void qapply(queue_t *qp, void (*fn)(void* elementp)) {
 	if (qp == NULL || fn == NULL) {
-		return NULL;
+		return;
   }
   
   pq_t *q = (pq_t*)qp;

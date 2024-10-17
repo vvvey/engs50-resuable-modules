@@ -82,7 +82,7 @@ hashtable_t *hopen(uint32_t hsize) {
 /* hclose -- closes a hash table */
 void hclose(hashtable_t *htp) {
 	if (htp == NULL) {
-		return NULL;
+		return;
 	}
 
 	hasht_t *hashtablep = (hasht_t*)htp;
@@ -91,7 +91,8 @@ void hclose(hashtable_t *htp) {
 		qclose(hashtablep->table[i]);
 	}
 
-	free(htp);
+  free(hashtablep->table);
+	free(hashtablep);
 }
 
 /* hput -- puts an entry into a hash table under designated key 
@@ -112,7 +113,7 @@ int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen) {
 /* happly -- applies a function to every entry in hash table */
 void happly(hashtable_t *htp, void (*fn)(void* ep)) {
 	if (htp == NULL || fn == NULL) {
-		return NULL;
+		return;
 	}
 
 	hasht_t *hashtablep = (hasht_t*)htp;
